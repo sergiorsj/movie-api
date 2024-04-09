@@ -1,0 +1,28 @@
+{
+  "name": "movie_api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Sergio Roberto",
+  "license": "ISC",
+  "description": "movies",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.19.2",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "eslint": "^9.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sergiorsj/movie-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sergiorsj/movie-api/issues"
+  },
+  "homepage": "https://github.com/sergiorsj/movie-api#readme"
+}
