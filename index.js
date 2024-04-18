@@ -3,7 +3,6 @@ const morgan = require('morgan');
 const app = express();
 const bodyParser = require('body-parser');
 const uuid = require('uuid');
-const PORT = 8080;
 
 const users = [
     { id:'1', fullName: "Jessica Amanda", email: "jamanda@gmail.com", favMovie: "The Lion King"},
@@ -168,6 +167,6 @@ app.delete('/users/:id/', (req, res) => {
 });
 
 // Start the server
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+app.listen(8080, () => {
+    console.log(`Server is running on 8080`);
 });
