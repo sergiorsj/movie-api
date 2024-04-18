@@ -1,9 +1,169 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Documentation</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documention for movie api</title>
+    <style>
+        table , th, td {
+            margin: 5px;
+            border: 1px solid;
+        }
+    </style>
 </head>
 <body>
-    <!-- Your content here -->
+    <h1>Documentation for movie-api</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Description of Endpoint Return</th>
+                <th>Endpoint URL</th>
+                <th>Method Type</th>
+                <th>Format of Request Data</th>
+                <th>Format of Response Data</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Return a list of ALL movies</td>
+                <td>/top10Movies</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>A JSON object holding data about my 10 top movies</td>
+            </tr>
+            <tr>
+                <td>Return data about a single movie by title</td>
+                <td>/movies/:title</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>A JSON object holding data about the requested movie ex:
+                    <code>
+                        {
+                            "title": "Avatar",
+                            "director": "James Cameron",
+                            "year": "2009"
+                        }
+                    </code>
+                </td>
+            </tr>
+            <tr>
+                <td>Return data about a single movie's director by title</td>
+                <td>/movies/:title/director</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>A JSON object holding data about the genre of a specific movie ex:
+                    <code>
+                        "James Cameron"
+                    </code>
+                </td>
+            </tr>
+            <tr>
+                <td>Return data about a single movie's year by title</td>
+                <td>/movies/:title/year</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>A JSON object holding data about the director of a specific movie ex:
+                    <code>
+                        "2009"
+                    </code>
+                </td>
+            </tr>
+            <tr>
+                <td>Return the documentation page</td>
+                <td>/documentation</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>A html page holding the documentation page of this app</td>
+            </tr>
+            <tr>
+                <td>Create new user</td>
+                <td>/users</td>
+                <td>POST</td>
+                <td>A JSON object holding data from the user to be added ex:
+                    <code>
+                        {
+                            "fullname": "Jessica Amanda",
+                            "email": "jamanda@gmail.com"
+                        }
+                    </code>
+                </td>
+                <td>A JSON object holding data from the user that has been added plus uuid ex:
+                    <code>
+                        {
+                            "fullname": "Jessica Amanda",
+                            "email": "jamanda@gmail.com",
+                            "id": "200f45b2-d144-49a6-9252-863c0fec99a9"
+                        }
+                    </code>
+                </td>
+            </tr>
+            <tr>
+                <td>Update user name/email by uuid</td>
+                <td>/users/:id</td>
+                <td>PUT</td>
+                <td>A JSON object holding data from the user to be updated ex:
+                    <code>
+                        {
+                            "fullname": "Leonardo Matheus",
+                            "email": "lmatheus@gmail.com"
+                        }
+                    </code>
+                </td>
+                <td>A JSON object holding data from the user that has been updated ex:
+                    <code>
+                        {
+                            "user": "2",
+                            "fullname": "Hilda Mirahi",
+                            "email": "hmirahi@gmail.com",
+                            "favMovies": [
+                                {
+                                    "title": "Avatar",
+                                    "director": "James Cameron",
+                                    "year": "2009"
+                                }
+                            ]
+                        }
+                    </code>
+                </td>
+            </tr>
+            <tr>
+                <td>Update users favMovies by title and user id</td>
+                <td>/users/:id/:title</td>
+                <td>POST</td>
+                <td>A JSON object holding data from the user about favMovies to be updated ex:
+                    <code>
+                        {
+                            "director": "James Cameron",
+                            "year": "2009"
+                        }
+                    </code>
+                </td>
+                <td>A message returning if the users favMovies have been successfully updated with the updated favMovies logged on the console ex:
+                    <code>
+                        [{"title":"The Lion King","director":"Jon Favreau","year":"2019"},{"title":"Fast and Furious","director":"Vin Diesel","year":"2001"}]
+                    </code>
+                </td>
+            </tr>
+            <tr>
+                <td>Delete a user's favMovie</td>
+                <td>/users/:id/:title</td>
+                <td>DELETE</td>
+                <td>None</td>
+                <td>A message returning if the users favMovies have been successfully updated with the updated favMovies logged on the console ex:
+                    <code>
+                        [{"title":"Avatar","director":"James Cameron","year":"2009"}]
+                    </code>
+                </td>
+                </tr>
+            <tr>
+                <td>Delete a user</td>
+                <td>/users/:id/</td>
+                <td>DELETE</td>
+                <td>None</td>
+                <td>A message returning if the user was successfully deleted</td>
+            </tr>
+        </tbody>
+    </table>
+    
 </body>
 </html>
