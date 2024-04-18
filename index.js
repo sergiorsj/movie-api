@@ -32,8 +32,8 @@ app.get('/', (req, res) => {
 });
 
 // GET route at "/movies" endpoint
-app.get('/movies', (req, res) => {
-    res.status(200)(top10Movies);
+app.get('/top10Movies', (req, res) => {
+    res.status(200).json(top10Movies);
 });
 
 // Read by title
