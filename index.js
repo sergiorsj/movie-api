@@ -5,8 +5,8 @@ const bodyParser = require('body-parser');
 const uuid = require('uuid');
 
 const users = [
-    { id:'1', fullName: "Jessica Amanda", email: "jamanda@gmail.com", favMovie: "The Lion King"},
-    { id:'2', fullName: "Hilda Mirahi", email: "hmirahi@gmail.com", favMovie: "Avatar"},
+    { id:'1', fullName: "Jessica Amanda", email: "jamanda@gmail.com", favMovie: [{ title: "The Lion King", director: "Jon Favreau", year: 2019}]},
+    { id:'2', fullName: "Hilda Mirahi", email: "hmirahi@gmail.com", favMovie: [{title:"Avatar", director: "James Cameron", year: 2009}]},
 ];
 
 const top10Movies = [
