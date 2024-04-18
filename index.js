@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const app = express();
 const bodyParser = require('body-parser');
+const uuid = require('uuid');
 const PORT = 3000;
 
 const users = [
@@ -22,7 +23,6 @@ const top10Movies = [
     { title: "Furious 7", director: "James Wan", year: 2015 },
 ];
 
-// Middleware
 app.use(bodyParser.json());
 
 // Morgan middleware to log all requests to the terminal
