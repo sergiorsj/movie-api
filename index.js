@@ -3,7 +3,7 @@ const morgan = require('morgan');
 const app = express();
 const bodyParser = require('body-parser');
 const uuid = require('uuid');
-const PORT = 3000;
+const PORT = 8080;
 
 const users = [
     { id:'1', fullName: "Jessica Amanda", email: "jamanda@gmail.com", favMovie: "The Lion King"},
