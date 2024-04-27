@@ -19,6 +19,10 @@ const uuid = require('uuid');
 
 app.use(bodyParser.json());
 
+let auth = require('./auth')(app);
+const passport = require('passport');
+require('./passport');
+
 let users = [
     {
       id:'1',
