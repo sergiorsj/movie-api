@@ -26,7 +26,7 @@ require('./passport');
 let users = [
     {
       id:'1',
-      fullname: 'John Doe',
+      fullname: 'John',
       email: 'johndoe@mail.com',
       favMovies: [{
         title: 'Inception',
@@ -36,7 +36,7 @@ let users = [
     },
     {
       id:'2',
-      fullname: 'Jane Doe',
+      fullname: 'Jane',
       email: 'janedoe@mail.com',
       favMovies: [{
         title: 'Inception',
