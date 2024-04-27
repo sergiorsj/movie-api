@@ -1,53 +1,51 @@
-// passport.js
+const passport = require('passport'),
+  LocalStrategy = require('passport-local').Strategy,
+  Models = require('./models.js'),
+  passportJWT = require('passport-jwt');
 
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const JWTStrategy = require('passport-jwt').Strategy;
-const ExtractJWT = require('passport-jwt').ExtractJwt;
-const User = require('./models/user'); // Replace './models/user' with the path to your User model
+let Users = Models.User,
+  JWTStrategy = passportJWT.Strategy,
+  ExtractJWT = passportJWT.ExtractJwt;
 
-// LocalStrategy for username/password authentication
-passport.use(new LocalStrategy({
-    usernameField: 'email', // Assuming email is the username field
-    passwordField: 'password' // Assuming password is the password field
-  },
-  async (email, password, done) => {
-    try {
-      // Find user by email
-      const user = await User.findOne({ email });
-
-      // If user not found or password incorrect, return error
-      if (!user || !await user.validPassword(password)) {
-        return done(null, false, { message: 'Incorrect email or password.' });
-      }
-
-      // If user found and password correct, return user
-      return done(null, user);
-    } catch (error) {
-      return done(error);
+passport.use(
+  new LocalStrategy(
+    {
+      usernameField: 'Username',
+      passwordField: 'Password',
+    },
+    async (username, password, callback) => {
+      console.log(`${username} ${password}`);
+      await Users.findOne({ Username: username })
+      .then((user) => {
+        if (!user) {
+          console.log('incorrect username');
+          return callback(null, false, {
+            message: 'Incorrect username or password.',
+          });
+        }
+        console.log('finished');
+        return callback(null, user);
+      })
+      .catch((error) => {
+        if (error) {
+          console.log(error);
+          return callback(error);
+        }
+      })
     }
-  }
-));
+  )
+);
 
-// JWTStrategy for JSON Web Token authentication
+
 passport.use(new JWTStrategy({
-    jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-    secretOrKey: 'your_jwt_secret' // Replace 'your_jwt_secret' with your actual JWT secret
-  },
-  async (jwtPayload, done) => {
-    try {
-      // Find user by ID from JWT payload
-      const user = await User.findById(jwtPayload.sub);
-
-      // If user not found, return error
-      if (!user) {
-        return done(null, false, { message: 'User not found.' });
-      }
-
-      // If user found, return user
-      return done(null, user);
-    } catch (error) {
-      return done(error);
-    }
-  }
-));
+  jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+  secretOrKey: 'your_jwt_secret'
+}, async (jwtPayload, callback) => {
+  return await Users.findById(jwtPayload._id)
+    .then((user) => {
+      return callback(null, user);
+    })
+    .catch((error) => {
+      return callback(error)
+    });
+}));
