@@ -1,13 +1,6 @@
 const http = require('http');
 const url = require('url');
 const fs = require('fs');
-const mongoose = require('mongoose');
-const Models = require('./models.js');
-const Movies = Models.Movie;
-const Users = Models.User;
-let Movie = mongoose.model('Movie', movieSchema);
-let User = mongoose.model('User', userSchema);
-mongoose.connect('mongodb://localhost:27017/dbname', { useNewUrlParser: true, useUnifiedTopology: true });
 
 const server = http.createServer((request, response) => {
     // Log the request URL and timestamp
