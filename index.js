@@ -105,6 +105,24 @@ app.get('/', (req, res) => {
     res.send('Welcome to my movie API!');
 });
 
+app.get('/movies', passport.authenticate('jwt', { session: false }), async (req, res) => {
+  await Movies.find()
+    .then((movies) => {
+      res.status(201).json(movies);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send('Error: ' + error);
+    });
+});
+
+// Require and use the auth router
+const authRouter = require('./auth');
+app.use('/auth', authRouter);
+
+// Initialize Passport middleware
+app.use(passport.initialize());
+
 // READ
 app.get('/movies', (req, res) => {
     res.status(200).json(movies);
