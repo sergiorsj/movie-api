@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const { check, validationResult } = require('express-validator');
 
 const fs = require('fs'); // import built in node modules fs and path 
 const path = require('path');
