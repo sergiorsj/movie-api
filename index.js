@@ -261,6 +261,7 @@ app.delete('/users/:id/', (req, res) => {
   
 });
 //Server
-app.listen(8080, ()=>{
-    console.log('server is running on 8080');
+const port = process.env.PORT || 8080;
+app.listen(port, '0.0.0.0',() => {
+ console.log('Listening on Port ' + port);
 });
