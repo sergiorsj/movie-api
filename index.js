@@ -9,6 +9,7 @@ const morgan = require('morgan');
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags: 'a'})
 app.use(morgan('combined', {stream: accessLogStream}));
 
+// mongodb+srv://sergiorsj11:Passw0rd@myflixdb.aur59md.mongodb.net/myflixDB
 
 app.use((err, req, res, next) => {
     console.error(err.stack);
@@ -105,7 +106,7 @@ let movies = [
 
 
 app.get('/', (req, res) => {
-    res.send('Welcome to my movie API!');
+    res.send('Welcome to my movie API by Sergio!');
 });
 
 app.get('/movies', passport.authenticate('jwt', { session: false }), async (req, res) => {
