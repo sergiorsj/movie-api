@@ -5,7 +5,12 @@ const { check, validationResult } = require('express-validator');
 const fs = require('fs'); // import built in node modules fs and path 
 const path = require('path');
 const morgan = require('morgan');
+const mongoose = require('mongoose');
+const Models = require('./models.js');
 
+const Movies = Models.Movie;
+const Users = Models.User;
+mongoose.connect('mongodb+srv://sergiorsj11:Passw0rd@myflixdb.aur59md.mongodb.net/myflixDB', { useNewUrlParser: true, useUnifiedTopology: true });
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags: 'a'})
 app.use(morgan('combined', {stream: accessLogStream}));
 
@@ -177,16 +182,42 @@ app.get('/documentation', (req, res) => {
 });
 
 //Create new user
-app.post('/users', (req, res) => {
-    const newUser = req.body;
-    if(newUser.fullname){
-        newUser.id = uuid.v4();
-        users.push(newUser);
-        res.status(201).json(newUser);
-    }
-    else{
-        res.status(400).send('user needs name');
-    }
+app.post('/users', async (req, res) => {
+  await Users.findOne({ Username: req.body.Username })
+    .then((user) => {
+      if (user) {
+        return res.status(400).send(req.body.Username + 'already exists');
+      } else {
+        Users
+          .create({
+            Username: req.body.Username,
+            Password: req.body.Password,
+            Email: req.body.Email,
+            Birthday: req.body.Birthday
+          })
+          .then((user) =>{res.status(201).json(user) })
+        .catch((error) => {
+          console.error(error);
+          res.status(500).send('Error: ' + error);
+        })
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send('Error: ' + error);
+    });
+});
+
+// Get all users
+app.get('/users', async (req, res) => {
+  await Users.find()
+    .then((users) => {
+      res.status(201).json(users);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
 });
 
 //Update user info
