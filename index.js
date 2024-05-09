@@ -232,15 +232,6 @@ app.get('/users/:Username', async (req, res) => {
     });
 });
 
-then((users) => {
-  res.json(users)
-})
-
-.catch((error) => {
-  console.error(error);
-  res.status(500).send('Error: ' + error);
-});
-
 //Update user info
 app.put('/users/:id', (req, res) => {
   const { id } = req.params;
