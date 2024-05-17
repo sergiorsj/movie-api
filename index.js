@@ -145,7 +145,7 @@ app.get('/movies', (req, res) => {
 //READ by title
 app.get('/movies/:title', (req, res) => {
     const {title} = req.params;
-    Movies.findOne({title: title})
+    Movies.findOne({Title: title})
     .then((movie) => {res.json(movie)})
         .catch((error) => {
           console.error(error);
@@ -154,29 +154,25 @@ app.get('/movies/:title', (req, res) => {
 });
 
 //READ Genre by title
-app.get('/movies/:title/genre', (req, res) => {
-    const {title} = req.params;
-    const movie = movies.find( movie => movie.title === title )
-
-    if(movie){
-        res.status(200).json(movie.genre);
-    }
-    else{
-        res.status(404).send('Movie not found :( ');
-    }
+app.get('/movies/genre/:genre', (req, res) => {
+    const {genre} = req.params;
+    Movies.findOne({"Genre.Name": genre})
+    .then((movie) => {res.json(movie.Genre)})
+        .catch((error) => {
+          console.error(error);
+          res.status(500).send('Error: ' + error);
+        })
 });
 
 //READ Director by title
-app.get('/movies/:title/director', (req, res) => {
-    const {title} = req.params;
-    const movie = movies.find( movie => movie.title === title )
-
-    if(movie){
-        res.status(200).json(movie.director);
-    }
-    else{
-        res.status(404).send('Movie not found :( ');
-    }
+app.get('/movies/director/:director', (req, res) => {
+    const {director} = req.params;
+    Movies.findOne({"Director.Name": director})
+    .then((movie) => {res.json(movie.Director)})
+        .catch((error) => {
+          console.error(error);
+          res.status(500).send('Error: ' + error);
+        })
 });
 
 //READ Documentation
