@@ -185,9 +185,9 @@ app.get('/documentation', (req, res) => {
 app.post('/users', async (req, res) => {
   await Users.findOne({ Username: req.body.Username })
     .then((user) => {
-      if (user) {
-        return res.status(400).send(req.body.Username + 'already exists');
-      } else {
+    //  if (!user) {
+    //    return res.status(400).send("Error in registration");
+    //  } else {
         Users
           .create({
             Username: req.body.Username,
@@ -200,7 +200,7 @@ app.post('/users', async (req, res) => {
           console.error(error);
           res.status(500).send('Error: ' + error);
         })
-      }
+     // }
     })
     .catch((error) => {
       console.error(error);
