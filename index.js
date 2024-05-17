@@ -134,20 +134,23 @@ app.use(passport.initialize());
 
 // READ
 app.get('/movies', (req, res) => {
-    res.status(200).json(movies);
+  Movies.find()
+  .then((movies) => {res.json(movies)})
+      .catch((error) => {
+        console.error(error);
+        res.status(500).send('Error: ' + error);
+      })
 });
 
 //READ by title
 app.get('/movies/:title', (req, res) => {
     const {title} = req.params;
-    const movie = movies.find( movie => movie.title === title )
-
-    if(movie){
-        res.status(200).json(movie);
-    }
-    else{
-        res.status(404).send('Movie not found :( ');
-    }
+    Movies.findOne({title: title})
+    .then((movie) => {res.json(movie)})
+        .catch((error) => {
+          console.error(error);
+          res.status(500).send('Error: ' + error);
+        })
 });
 
 //READ Genre by title
