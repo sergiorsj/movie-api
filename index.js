@@ -289,19 +289,16 @@ app.delete('/users/:id/:title', (req, res) => {
   console.log(JSON.stringify(user));
 });
 //Delete a user
-app.delete('/users/:id/', (req, res) => {
+app.delete('/user/delete/:id/', async (req, res) => {
   const { id  } = req.params;
-  let user = users.find( user => user.id == id );
-
-  if(user){
-    users = users.filter( user => user.id !== id)
-    console.log(users);
-    res.status(200).send('user has been deleted');
-  }
-  else{
-      res.status(400).send('could not update user');
-  }
-  
+  await Users.findOneAndDelete({ Username: id })
+  .then((user) => {
+    res.status(200) .send(id + ' was deleted ');
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send('Error: ' + err);
+  });  
 });
 //Server
 const port = process.env.PORT || 8080;
