@@ -114,17 +114,6 @@ app.get('/', (req, res) => {
     res.send('Welcome to my movie API by Sergio!');
 });
 
-app.get('/movies', passport.authenticate('jwt', { session: false }), async (req, res) => {
-  await Movies.find()
-    .then((movies) => {
-      res.status(201).json(movies);
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).send('Error: ' + error);
-    });
-});
-
 // Require and use the auth router
 const authRouter = require('./auth');
 app.use('/auth', authRouter);
@@ -253,41 +242,31 @@ app.put('/users/:id', (req, res) => {
 });
 
 //Update users favMovie
-app.post('/users/:id/:title', (req, res) => {
-  const { id , title } = req.params;
-  
+app.post('/users/:id/:username', async (req, res) => {
+  const { id , username } = req.params;
 
-  let user = users.find( user => user.id == id );
-  let newTitle = {
-    title,
-    director: req.body.director,
-    genre: req.body.genre
-  };
-  
-  if(user){
-      user.favMovies.push(newTitle);
-      res.status(200).send('user\'s favorite movies have been updated');
-  }
-  else{
-      res.status(400).send('could not update favorite movies');
-  }
-  console.log(JSON.stringify(user.favMovies));
+  await Users.findOneAndUpdate({ username: username }, {
+    $push: { FavoriteMovies: id}
+},
+{ new: true})
+.then((updatedUser) => {
+    res.json(updatedUser);
+})
 });
 
 //Delete a favorite movie
-app.delete('/users/:id/:title', (req, res) => {
-  const { id , title } = req.params;
-  let user = users.find( user => user.id == id );
+app.delete('/users/:id/:username', async (req, res) => {
+  const { id , username } = req.params;
 
-  if(user){
-    user = user.favMovies.filter( m => m.title !== title)
-    res.status(200).send('user\'s favorite movies have been updated');
-  }
-  else{
-      res.status(400).send('could not update favorite movies');
-  }
-  console.log(JSON.stringify(user));
+  await Users.findOneAndUpdate({ username: username }, {
+    $pull: { FavoriteMovies: id}
+},
+{ new: true})
+.then((updatedUser) => {
+    res.json(updatedUser);
+})
 });
+
 //Delete a user
 app.delete('/user/delete/:id/', async (req, res) => {
   const { id  } = req.params;
