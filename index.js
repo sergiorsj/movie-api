@@ -261,7 +261,7 @@ app.post("/users/:id/:username", async (req, res) => {
   const { id, username } = req.params;
 
   await Users.findOneAndUpdate(
-    { username: username },
+    { Username: username },
     {
       $push: { FavoriteMovies: id },
     },
@@ -276,7 +276,7 @@ app.delete("/users/:id/:username", async (req, res) => {
   const { id, username } = req.params;
 
   await Users.findOneAndUpdate(
-    { username: username },
+    { Username: username },
     {
       $pull: { FavoriteMovies: id },
     },
